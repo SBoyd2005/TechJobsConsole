@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace TechJobsConsole
 {
@@ -65,7 +63,10 @@ namespace TechJobsConsole
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                        //Console.WriteLine("Search all fields not yet implemented.");
+                        searchResults = JobData.FindByValue(searchTerm);
+                        PrintJobs(searchResults);
+
                     }
                     else
                     {
@@ -118,21 +119,25 @@ namespace TechJobsConsole
             return choiceKeys[choiceIdx];
         }
 
-        private static void PrintJobs(List<Dictionary<string, string>> someJobs)
-
+        public static void PrintJobs(List<Dictionary<string, string>> someJobs)
         {
-            for (int i = 0; i < someJobs.Count; i++)
+            if (someJobs.Count == 0)
             {
-                Console.WriteLine("Listing Number" + (i));
+                Console.WriteLine("No jobs available.");
+                }
+            else
+            {
+                Console.WriteLine("****");
+                foreach (Dictionary<string, string> dict in someJobs)
+                {
+                    Console.WriteLine("*****");
+                    foreach (KeyValuePair<string, string> kvp in dict)
+                    Console.WriteLine("{0}: {1}", kvp.Key, kvp.Value);
+                }
+                Console.WriteLine("****");
+            }
 
-                foreach (KeyValuePair<string, string> data in someJobs[i])
-               {
-                    Console.WriteLine("{0}: {i}", data.Key, data.Value);
-               }
-
-            Console.WriteLine("\n *** \n");
-
-             }   
         }
+
     }
 }
